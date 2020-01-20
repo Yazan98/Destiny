@@ -1,0 +1,185 @@
+buildscript {
+
+    ext {
+        kotlin_version = '1.3.61'
+    }
+    ext.PluginsVersions = [
+            "GradlePluginV"      : "4.0.0-alpha08",
+            "KotlinPluginV"      : "1.3.50",
+            "EasyLauncherPluginV": "1.3.1",
+            "FirebasePluginV"    : "4.3.1",
+            "KtlintPluginV"      : "2.1.1",
+            "FabricPluginV"      : "1.28.1",
+            "NavigationPluginV"  : "2.2.0-rc04"
+    ]
+
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+        maven { url "https://dl.bintray.com/yt98/Vortex" }
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:${rootProject.ext.PluginsVersions.GradlePluginV}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${rootProject.ext.PluginsVersions.KotlinPluginV}"
+//        classpath "com.akaita.android:easylauncher:${rootProject.ext.PluginsVersions.EasyLauncherPluginV}"
+        classpath "com.google.gms:google-services:${rootProject.ext.PluginsVersions.FirebasePluginV}"
+        classpath "org.jmailen.gradle:kotlinter-gradle:${rootProject.ext.PluginsVersions.KtlintPluginV}"
+        classpath "io.fabric.tools:gradle:${rootProject.ext.PluginsVersions.FabricPluginV}"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${rootProject.ext.PluginsVersions.NavigationPluginV}"
+    }
+
+}
+
+apply from: "Libraries.gradle"
+apply from: "AppDetails.gradle"
+
+allprojects {
+
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+        maven { url 'https://jitpack.io' }
+        maven { url "https://dl.bintray.com/yt98/Vortex" }
+        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local' }
+    }
+
+}
+
+subprojects {
+    if (!project.name.contains("app")) {
+
+        apply plugin: "${rootProject.ext.AndroidLibraryPlugin}"
+        apply plugin: "${rootProject.ext.KotlinAndroidPlugin}"
+        apply plugin: "${rootProject.ext.KotlinAndroidExPlugin}"
+        apply plugin: "${rootProject.ext.KotlinKaptPlugin}"
+
+        android {
+
+//            signingConfigs {
+//                release {
+//                    storeFile file('Key Path')
+//                    storePassword 'Key Password'
+//                    keyAlias = 'Key Name'
+//                    keyPassword 'Key Password'
+//                }
+//
+//                debug {
+//                    storeFile file('Key Path')
+//                    storePassword 'Key Password'
+//                    keyAlias = 'Key Name'
+//                    keyPassword 'Key Password'
+//                }
+//            }
+
+            compileSdkVersion rootProject.ext.compileSdkV
+            buildToolsVersion "${rootProject.ext.BuildToolsVersion}"
+            defaultConfig {
+                minSdkVersion rootProject.ext.minSdkV
+                targetSdkVersion rootProject.ext.compileSdkV
+                renderscriptTargetApi rootProject.ext.renderscriptTargetApi
+                renderscriptSupportModeEnabled rootProject.ext.renderscriptSupportModeEnabled
+                multiDexEnabled rootProject.ext.MultiDexMergeEnabled
+                versionCode rootProject.ext.VersionCode
+                versionName "${rootProject.ext.ApplicationVersion}"
+                buildConfigField "String", "BASE_URL", "\"${ApiUrl}\""
+                testInstrumentationRunner "${rootProject.ext.AndroidTest}"
+                resConfigs "en", "ar"
+            }
+
+            buildTypes {
+
+                debug {
+                    minifyEnabled false
+                    debuggable true
+                    manifestPlaceholders = [enableCrashReporting: "false"]
+                    ext.enableCrashlytics = false
+                    ext.alwaysUpdateBuildId = false
+//                    signingConfig signingConfigs.debug
+                    proguardFiles getDefaultProguardFile("${rootProject.ext.ProguardFile}"), "${rootProject.ext.Proguard}"
+                }
+
+                release {
+                    minifyEnabled true
+                    debuggable false
+                    ext.enableCrashlytics = true
+                    manifestPlaceholders = [enableCrashReporting: "true"]
+                    proguardFiles getDefaultProguardFile("${rootProject.ext.ProguardFile}"), "${rootProject.ext.Proguard}"
+//                    signingConfig signingConfigs.release
+                }
+
+            }
+
+        }
+
+        dependencies { config ->
+            defaultTestingConfiguration(config)
+            def RxConfiguration = rootProject.ext.RxConfiguration
+            def KotlinCoroutinesConfiguration = rootProject.ext.KotlinCoroutinesConfiguration
+
+            implementation RxConfiguration.RxJava
+            implementation RxConfiguration.RxAndroid
+
+            implementation KotlinCoroutinesConfiguration.Coroutines
+            implementation KotlinCoroutinesConfiguration.AndroidCoroutines
+
+            daggerConfig(config)
+
+            if (project.name.equals("domain")) {
+                lifeCycleConfiguration(config)
+            }
+
+        }
+
+    }
+
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xmaxerrs" << "500"
+    }
+}
+
+void daggerConfig(configuration) {
+    def DependenciesInjection = rootProject.ext.DependenciesInjection
+    configuration.kapt DependenciesInjection.MotifCompiler
+    configuration.implementation DependenciesInjection.Motif
+    configuration.implementation DependenciesInjection.Dagger
+    configuration.kapt DependenciesInjection.DaggerCompiler
+    configuration.implementation DependenciesInjection.DaggerAndroid
+    configuration.implementation DependenciesInjection.DaggerAndroidSupport
+    configuration.kapt DependenciesInjection.DaggerAndroidProcessor
+}
+
+void defaultTestingConfiguration(configuration) {
+    def TestingConfiguration = rootProject.ext.TestingConfiguration
+    configuration.testImplementation TestingConfiguration.Junit
+    configuration.androidTestImplementation TestingConfiguration.Esspresso
+    configuration.androidTestImplementation TestingConfiguration.Runner
+}
+
+void lifeCycleConfiguration(configuration) {
+    def LifeCycleConfiguration = rootProject.ext.LifeCycleConfiguration
+    configuration.implementation LifeCycleConfiguration.LifecycleViewModel
+    configuration.implementation LifeCycleConfiguration.LifecycleExtensions
+    configuration.implementation LifeCycleConfiguration.LifecycleRuntime
+    configuration.implementation LifeCycleConfiguration.LifecycleLiveData
+    configuration.implementation LifeCycleConfiguration.LifecycleCommon
+}
+
+void databaseConfiguration(configuration) {
+    def RoomConfiguration = rootProject.ext.RoomConfiguration
+    configuration.implementation RoomConfiguration.RoomRuntime
+    configuration.kapt RoomConfiguration.RoomCompiler
+    configuration.implementation RoomConfiguration.RoomKotlin
+    configuration.implementation RoomConfiguration.RoomRxJava
+}

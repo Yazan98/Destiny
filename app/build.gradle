@@ -1,0 +1,218 @@
+apply plugin: "${rootProject.ext.AndroidPlugin}"
+apply plugin: "${rootProject.ext.KotlinAndroidPlugin}"
+apply plugin: "${rootProject.ext.KotlinAndroidExPlugin}"
+//apply plugin: "${rootProject.ext.EasyLauncherPlugin}"
+apply plugin: "${rootProject.ext.KotlinKaptPlugin}"
+apply plugin: "${rootProject.ext.navigationPlugin}"
+
+android {
+
+    compileSdkVersion rootProject.ext.compileSdkV
+    buildToolsVersion "${rootProject.ext.BuildToolsVersion}"
+    useLibrary "${rootProject.ext.HttpLegacyEnabled}"
+
+    defaultConfig {
+        applicationId "${rootProject.ext.applicationPackage}"
+        minSdkVersion rootProject.ext.minSdkV
+        targetSdkVersion rootProject.ext.compileSdkV
+        renderscriptTargetApi rootProject.ext.renderscriptTargetApi
+        renderscriptSupportModeEnabled rootProject.ext.renderscriptSupportModeEnabled
+        multiDexEnabled rootProject.ext.MultiDexMergeEnabled
+        versionCode rootProject.ext.VersionCode
+        versionName "${rootProject.ext.ApplicationVersion}"
+        testInstrumentationRunner "${rootProject.ext.AndroidTest}"
+        resConfigs "en", "ar"
+        testInstrumentationRunnerArgument "${rootProject.ext.AndroidRunnerArgument}", "${rootProject.ext.LeakCanaryListener}"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
+
+        manifestPlaceholders = [
+                enableCrashReporting: "false",
+                CrashReportingApiKey: "ApiKeyHere",
+                GoogleMapsApiKey    : "GoogleMapsApiKey"
+        ]
+    }
+
+
+    lintOptions {
+        abortOnError false
+    }
+
+//    signingConfigs {
+//        release {
+//            storeFile file('Key Path')
+//            storePassword 'Key Password'
+//            keyAlias = 'Key Name'
+//            keyPassword 'Key Password'
+//        }
+//
+//        debug {
+//            storeFile file('Key Path')
+//            storePassword 'Key Password'
+//            keyAlias = 'Key Name'
+//            keyPassword 'Key Password'
+//        }
+//    }
+
+    buildTypes {
+
+        debug {
+            minifyEnabled false
+            debuggable true
+            ext.enableCrashlytics = false
+            ext.alwaysUpdateBuildId = false
+//            signingConfig signingConfigs.debug
+            buildConfigField "String", "BASE_URL", "\"${ApiUrl}\""
+            proguardFiles getDefaultProguardFile("${rootProject.ext.ProguardFile}"), "${rootProject.ext.Proguard}"
+        }
+
+        release {
+            minifyEnabled false
+            debuggable false
+            ext.alwaysUpdateBuildId = false
+            ext.enableCrashlytics = true
+//            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile("${rootProject.ext.ProguardFile}"), "${rootProject.ext.Proguard}"
+        }
+
+    }
+
+    sourceSets {
+        main.java.srcDirs += "${rootProject.ext.KotlinSource}"
+    }
+
+//    easylauncher {
+//        foregroundIconNames "${rootProject.ext.EasyLauncherForground}"
+//    }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    lintOptions {
+        disable 'ContentDescription',
+                'ObsoleteLintCustomCheck',
+                'CheckResult'
+    }
+
+    applicationVariants.all { variant ->
+        def profileName
+        if (getGradle().getStartParameter().getTaskRequests().toString().contains("Debug")) {
+            profileName = "-Debug Version"
+        } else {
+            profileName = "-Release Version"
+        }
+        def appName = "Wintrop ${profileName}"
+        variant.outputs.all { output ->
+            def newApkName
+            newApkName = "${appName}-${rootProject.ext.ApplicationBuildType} -${versionName}.apk"
+            output.outputFileName = new File(newApkName)
+        }
+    }
+
+}
+
+dependencies { configuration ->
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    defaultTestingConfiguration(configuration)
+    koinConfiguration(configuration)
+    googlePlayServicesConfiguration(configuration)
+    rxJavaConfiguration(configuration)
+    kotlinCoroutines(configuration)
+    userInterfaceConfiguration(configuration)
+    retrofitConfiguration(configuration)
+    applicationConfiguration(configuration)
+    vortexConfiguration(configuration)
+    daggerConfig(configuration)
+    databaseConfiguration(configuration)
+    implementation project(":data")
+    implementation project(":domain")
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.1'
+    implementation 'com.squareup.leakcanary:leakcanary-object-watcher-android:2.1'
+
+}
+
+private void koinConfiguration(configuration) {
+    def KoinConfiguration = rootProject.ext.KoinConfiguration
+    configuration.implementation KoinConfiguration.KoinAndroid
+    configuration.implementation KoinConfiguration.KoinLifecycle
+    configuration.implementation KoinConfiguration.KoinViewModel
+}
+
+private void googlePlayServicesConfiguration(configuration) {
+    def GooglePlayServices = rootProject.ext.GooglePlayServices
+    configuration.implementation GooglePlayServices.GoogleMaps
+    configuration.implementation GooglePlayServices.GooglePlaces
+    configuration.implementation GooglePlayServices.GoogleGcm
+    configuration.implementation GooglePlayServices.GoogleLocations
+}
+
+private void rxJavaConfiguration(configuration) {
+    def RxConfiguration = rootProject.ext.RxConfiguration
+    configuration.implementation RxConfiguration.RxJava
+    configuration.implementation RxConfiguration.RxAndroid
+}
+
+private void kotlinCoroutines(configuration) {
+    def KotlinCoroutinesConfiguration = rootProject.ext.KotlinCoroutinesConfiguration
+    configuration.implementation KotlinCoroutinesConfiguration.Coroutines
+    configuration.implementation KotlinCoroutinesConfiguration.AndroidCoroutines
+}
+
+private void userInterfaceConfiguration(configuration) {
+    def UiConfiguration = rootProject.ext.UiConfiguration
+    configuration.implementation UiConfiguration.RecyclerView
+    configuration.implementation UiConfiguration.SupportCompat
+    configuration.implementation UiConfiguration.SupportCore
+    configuration.implementation UiConfiguration.SupportCoreUi
+    configuration.implementation UiConfiguration.SupportFragment
+    configuration.implementation UiConfiguration.AndroidCore
+    configuration.implementation UiConfiguration.CardView
+    configuration.implementation UiConfiguration.AppCompat
+    configuration.implementation UiConfiguration.GoogleMaterial
+    configuration.implementation UiConfiguration.Fresco
+    configuration.implementation UiConfiguration.Sdp
+    configuration.implementation UiConfiguration.Constraintlayout
+    configuration.implementation UiConfiguration.NavigationFragment
+    configuration.implementation UiConfiguration.NavigationUI
+}
+
+private void retrofitConfiguration(configuration) {
+    def DataConfiguration = rootProject.ext.DataConfiguration
+    configuration.implementation DataConfiguration.Retrofit
+    configuration.implementation DataConfiguration.RetrofitRxJavaAdapter
+    configuration.implementation DataConfiguration.RetrofitIntercenptor
+    configuration.implementation DataConfiguration.retrofitGsonConverter
+}
+
+private void applicationConfiguration(configuration) {
+    def ApplicationConfiguration = rootProject.ext.ApplicationConfiguration
+    configuration.implementation ApplicationConfiguration.Timber
+    configuration.implementation ApplicationConfiguration.MultiDexApp
+    configuration.implementation ApplicationConfiguration.KotlinJdk
+}
+
+private void vortexConfiguration(configuration) {
+    def VortexConfiguration = rootProject.ext.VortexConfiguration
+    configuration.implementation VortexConfiguration.VortexUserInterface
+    configuration.implementation VortexConfiguration.VortexPermissions
+    configuration.implementation VortexConfiguration.VortexCore
+    configuration.implementation VortexConfiguration.VortexLocal
+    configuration.implementation VortexConfiguration.VortexData
+    configuration.implementation VortexConfiguration.VortexExtras
+    configuration.implementation VortexConfiguration.VortexPrefs
+}
