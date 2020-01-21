@@ -28,7 +28,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.fragment.app.FragmentContainerView
+    <fragment
         android:id="@+id/ExternalNavHost"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"

@@ -7,22 +7,32 @@
 
     <fragment
         android:id="@+id/onBoardingFragment"
-        tools:layout="@layout/fragment_on_boarding"
         android:name="com.yazan98.culttrip.client.fragment.reg.OnBoardingFragment"
-        android:label="OnBoardingFragment" >
+        android:label="OnBoardingFragment"
+        tools:layout="@layout/fragment_on_boarding">
+
         <action
             android:id="@+id/action_onBoardingFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+
     </fragment>
 
     <fragment
         android:id="@+id/loginFragment"
-        tools:layout="@layout/fragment_login"
         android:name="com.yazan98.culttrip.client.fragment.reg.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
+            app:destination="@id/registerFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out"  />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
