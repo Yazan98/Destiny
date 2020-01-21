@@ -141,6 +141,7 @@ dependencies { configuration ->
     implementation project(":data")
     implementation project(":domain")
 
+    implementation("com.google.android.material:material:1.2.0-alpha03")
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.1'
     implementation 'com.squareup.leakcanary:leakcanary-object-watcher-android:2.1'
 

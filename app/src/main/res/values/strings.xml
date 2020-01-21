@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Culttrip</string>
+    <string name="welcome_des">Welcome To Culttrip Client This Application Powered By Vortex-io to show the culture activity with Million Feature Click Continue to Start Using The Application</string>
+    <string name="continue_button">Continue</string>
 </resources>
