@@ -145,6 +145,12 @@ dependencies { configuration ->
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.1'
     implementation 'com.squareup.leakcanary:leakcanary-object-watcher-android:2.1'
 
+    def nav_version = "2.1.0"
+
+    // Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
 }
 
 private void koinConfiguration(configuration) {

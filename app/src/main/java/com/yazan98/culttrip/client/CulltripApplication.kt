@@ -4,6 +4,7 @@ import android.content.Context
 import com.intuit.sdp.BuildConfig
 import com.yazan98.culttrip.client.utils.LeakUploader
 import com.yazan98.culttrip.domain.ApplicationConsts
+import com.yazan98.culttrip.domain.logic.AuthViewModel
 import io.vortex.android.keys.ImageLoader
 import io.vortex.android.keys.LoggerType
 import io.vortex.android.models.ui.VortexNotificationDetails
@@ -17,6 +18,7 @@ import kotlinx.coroutines.withContext
 import leakcanary.AppWatcher
 import leakcanary.LeakCanary
 import org.koin.android.ext.koin.androidLogger
+import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import org.koin.core.module.Module
@@ -26,6 +28,8 @@ class CulltripApplication : VortexApplication() {
 
     override fun onCreate() {
         super.onCreate()
+
+        VortexPrefsConfig.prefs = getSharedPreferences(ApplicationConsts.SHARED_PREFS_NAME, Context.MODE_PRIVATE)
 
         GlobalScope.launch {
             VortexConfiguration
@@ -37,7 +41,6 @@ class CulltripApplication : VortexApplication() {
                 .registerImageLoader(ImageLoader.FRESCO)
                 .registerLeakCanaryConfiguration()
 
-            VortexPrefsConfig.prefs = getSharedPreferences(ApplicationConsts.SHARED_PREFS_NAME, Context.MODE_PRIVATE)
             configNotifications()
 
             AppWatcher.config = AppWatcher.config.copy(watchFragmentViews = true)
@@ -54,7 +57,7 @@ class CulltripApplication : VortexApplication() {
     }
 
     private val appModules: Module = module {
-
+        viewModel<AuthViewModel> { AuthViewModel() }
     }
 
     private suspend fun configNotifications() {
