@@ -4,6 +4,7 @@ import com.yazan98.culttrip.data.CulttripRepository
 import com.yazan98.culttrip.data.api.DiscoveryApi
 import com.yazan98.culttrip.data.models.response.Category
 import com.yazan98.culttrip.data.models.response.CulttripResponse
+import com.yazan98.culttrip.data.models.response.Route
 import io.reactivex.Flowable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -19,6 +20,10 @@ class DiscoveryRepository @Inject constructor() : CulttripRepository<DiscoveryAp
 
     suspend fun getAllCategories(): Flowable<CulttripResponse<List<Category>>> {
         return getService().getAllCategories()
+    }
+
+    suspend fun getAllRouts(): Flowable<CulttripResponse<List<Route>>> {
+        return getService().getAllRouts()
     }
 
 }
