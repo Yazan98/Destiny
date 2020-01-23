@@ -5,6 +5,8 @@ import com.yazan98.culttrip.client.R
 import com.yazan98.culttrip.client.utils.CulttripViewPagerAdapter
 import io.vortex.android.ui.activity.VortexScreen
 import kotlinx.android.synthetic.main.screen_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainScreen : VortexScreen() {
     override fun getLayoutRes(): Int {
@@ -18,5 +20,14 @@ class MainScreen : VortexScreen() {
                 it.adapter = CulttripViewPagerAdapter(manager)
             }
         }
+
+        MainFloatingButton?.apply {
+            this.setOnClickListener {
+                GlobalScope.launch {
+                    startScreen<DiscoveryScreen>(false)
+                }
+            }
+        }
     }
+
 }

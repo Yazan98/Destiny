@@ -27,6 +27,7 @@
 
         <activity android:name=".screen.MainScreen" />
         <activity android:name=".screen.RegisterScreen" />
+        <activity android:name=".screen.DiscoveryScreen" />
     </application>
 
 </manifest>
