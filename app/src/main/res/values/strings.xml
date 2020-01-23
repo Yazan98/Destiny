@@ -16,4 +16,8 @@
     <string name="phone_required">Phone Number Required</string>
     <string name="location_required">Location Name Required</string>
     <string name="register_completed">Register Completed</string>
+    <string name="collections">Collections</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="home">Home</string>
+    <string name="fav">Fav</string>
 </resources>
