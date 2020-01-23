@@ -64,7 +64,10 @@ class MainFragment @Inject constructor() : VortexFragment<MainState, MainAction,
     override suspend fun onStateChanged(newState: MainState) {
         withContext(Dispatchers.IO) {
             when (newState) {
-                is MainState.SuccessState -> showPopularCollections(newState.get())
+                is MainState.SuccessState -> {
+                    showPopularCollections(newState.get())
+                    showAllItems(newState.get())
+                }
                 is MainState.ErrorState -> showMessage(newState.get())
             }
         }
@@ -80,6 +83,24 @@ class MainFragment @Inject constructor() : VortexFragment<MainState, MainAction,
 
     private suspend fun showPopularCollections(response: List<Collection>) {
         withContext(Dispatchers.Main) {
+            val result = ArrayList<Collection>()
+            response.forEach {
+                if(it.popular.equals("POPULAR")) {
+                    result.add(it)
+                }
+            }
+            activity?.let {
+                MainRecyclerView.apply {
+                    this.linearHorizontalLayout(it)
+                    this.adapter = CollectionsAdapter(result)
+                    (this.adapter as CollectionsAdapter).context = it
+                }
+            }
+        }
+    }
+
+    private suspend fun showAllItems(response: List<Collection>) {
+        withContext(Dispatchers.Main) {
             activity?.let {
                 MainRecyclerCollections.apply {
                     this.linearVerticalLayout(it)
@@ -93,6 +114,7 @@ class MainFragment @Inject constructor() : VortexFragment<MainState, MainAction,
     override fun onDestroyView() {
         super.onDestroyView()
         MainRecyclerCollections?.adapter = null
+        MainRecyclerView?.adapter = null
     }
 
 }
