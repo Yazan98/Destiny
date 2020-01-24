@@ -33,50 +33,10 @@
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/menu"
+        app:menu="@menu/main_menu"
         app:hideOnScroll="true"
-        android:layout_gravity="bottom">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="5"
-            android:paddingEnd="16dp">
-
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/home"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/colorPrimary"/>
-
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/fav"
-                android:background="?attr/selectableItemBackgroundBorderless"/>
-
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"/>
-
-<!--            <ImageButton-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                app:srcCompat="@drawable/ic_people_white_24dp"-->
-<!--                android:background="?attr/selectableItemBackgroundBorderless"/>-->
-
-<!--            <ImageButton-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                app:srcCompat="@drawable/ic_account_circle_24dp"-->
-<!--                android:background="?attr/selectableItemBackgroundBorderless"/>-->
-        </LinearLayout>
-    </com.google.android.material.bottomappbar.BottomAppBar>
+        android:layout_gravity="bottom"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/MainFloatingButton"
