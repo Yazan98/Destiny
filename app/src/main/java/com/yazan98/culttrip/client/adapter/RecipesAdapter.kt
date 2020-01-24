@@ -8,8 +8,7 @@ import io.vortex.android.utils.random.VortexBaseAdapter
 import io.vortex.android.utils.random.VortexImageLoaders
 import javax.inject.Inject
 
-class RecipesAdapter @Inject constructor(private val data: List<Recipe>) :
-    VortexBaseAdapter<RecipesViewHolder>() {
+class RecipesAdapter @Inject constructor(private val data: List<Recipe>) : VortexBaseAdapter<RecipesViewHolder>() {
 
     override fun getItemCount(): Int {
         return data.size

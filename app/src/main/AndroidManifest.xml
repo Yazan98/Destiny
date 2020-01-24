@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    android:installLocation="preferExternal"
-    package="com.yazan98.culttrip.client">
+    package="com.yazan98.culttrip.client"
+    android:installLocation="preferExternal">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".CulltripApplication"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/logo"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:name=".CulltripApplication"
+        android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -25,9 +25,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".screen.MainScreen" />
-        <activity android:name=".screen.RegisterScreen" />
-        <activity android:name=".screen.DiscoveryScreen" />
+        <activity
+            android:name=".screen.MainScreen"
+            android:screenOrientation="fullSensor" />
+
+        <activity
+            android:name=".screen.RegisterScreen"
+            android:screenOrientation="fullSensor" />
+
+        <activity
+            android:name=".screen.DiscoveryScreen"
+            android:screenOrientation="fullSensor" />
     </application>
 
 </manifest>
