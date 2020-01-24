@@ -1,7 +1,9 @@
 package com.yazan98.culttrip.domain.logic
 
+import androidx.lifecycle.MutableLiveData
 import com.yazan98.culttrip.data.RepositoriesComponentImpl
-import com.yazan98.culttrip.data.repository.CollectionRepository
+import com.yazan98.culttrip.data.models.response.Offer
+import com.yazan98.culttrip.data.repository.MainRepository
 import com.yazan98.culttrip.domain.action.MainAction
 import com.yazan98.culttrip.domain.state.MainState
 import io.vortex.android.reducer.VortexViewModel
@@ -13,7 +15,8 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor() : VortexViewModel<MainState, MainAction>() {
 
-    private val repository: CollectionRepository by lazy {
+    val offers: MutableLiveData<List<Offer>> by lazy { MutableLiveData<List<Offer>>() }
+    private val repository: MainRepository by lazy {
         RepositoriesComponentImpl().getCollectionRepository()
     }
 
@@ -21,16 +24,16 @@ class MainViewModel @Inject constructor() : VortexViewModel<MainState, MainActio
         withContext(Dispatchers.IO) {
             if (getStateHandler().value is MainState.ErrorState || getStateHandler().value == null) {
                 when (newAction) {
-                    is MainAction.GetCollection -> getCollections()
+                    is MainAction.GetCollection -> getAllOffers()
                 }
             }
         }
     }
 
-    private suspend fun getCollections() {
+    private suspend fun getAllOffers() {
         withContext(Dispatchers.IO) {
             acceptLoadingState(true)
-            addRxRequest(repository.getCollections().subscribe({
+            addRxRequest(repository.getOffers().subscribe({
                 GlobalScope.launch {
                     it.data?.let {
                         acceptLoadingState(false)

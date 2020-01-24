@@ -1,7 +1,7 @@
 package com.yazan98.culttrip.data
 
 import com.yazan98.culttrip.data.repository.AuthRepository
-import com.yazan98.culttrip.data.repository.CollectionRepository
+import com.yazan98.culttrip.data.repository.MainRepository
 import com.yazan98.culttrip.data.repository.DiscoveryRepository
 
 @motif.Scope
@@ -9,7 +9,7 @@ interface RepositoriesComponent {
 
     fun getAuthRepository(): AuthRepository
 
-    fun getCollectionRepository(): CollectionRepository
+    fun getCollectionRepository(): MainRepository
 
     fun getDiscoveryRepository(): DiscoveryRepository
 
@@ -20,8 +20,8 @@ interface RepositoriesComponent {
             return AuthRepository()
         }
 
-        fun getCollections(): CollectionRepository {
-            return CollectionRepository()
+        fun getCollections(): MainRepository {
+            return MainRepository()
         }
 
         fun getDiscoveryRepo(): DiscoveryRepository {

@@ -2,7 +2,6 @@ package com.yazan98.culttrip.domain.logic
 
 import androidx.lifecycle.MutableLiveData
 import com.yazan98.culttrip.data.RepositoriesComponentImpl
-import com.yazan98.culttrip.data.models.response.Route
 import com.yazan98.culttrip.data.repository.DiscoveryRepository
 import com.yazan98.culttrip.domain.action.DiscoveryAction
 import com.yazan98.culttrip.domain.state.DiscoveryState
@@ -15,7 +14,7 @@ import javax.inject.Inject
 
 class DiscoveryViewModel @Inject constructor() : VortexViewModel<DiscoveryState, DiscoveryAction>() {
 
-    val routsObserver: MutableLiveData<List<Route>> by lazy { MutableLiveData<List<Route>>() }
+//    val routsObserver: MutableLiveData<List<Route>> by lazy { MutableLiveData<List<Route>>() }
     private val discoveryRepository: DiscoveryRepository by lazy {
         RepositoriesComponentImpl().getDiscoveryRepository()
     }
@@ -24,7 +23,6 @@ class DiscoveryViewModel @Inject constructor() : VortexViewModel<DiscoveryState,
         withContext(Dispatchers.IO) {
             if (getStateHandler().value == null || getStateHandler().value is DiscoveryState.ErrorState) {
                 getCategories()
-                getAllRouts()
             }
         }
     }
@@ -36,26 +34,6 @@ class DiscoveryViewModel @Inject constructor() : VortexViewModel<DiscoveryState,
                 GlobalScope.launch {
                     it.data.let {
                         acceptNewState(DiscoveryState.SuccessState(it))
-                    }
-                }
-            }, {
-                GlobalScope.launch {
-                    it.message?.let {
-                        acceptLoadingState(false)
-                        acceptNewState(DiscoveryState.ErrorState(it))
-                    }
-                }
-            }))
-        }
-    }
-
-    private suspend fun getAllRouts() {
-        withContext(Dispatchers.IO) {
-            addRxRequest(discoveryRepository.getAllRouts().subscribe({
-                GlobalScope.launch {
-                    acceptLoadingState(false)
-                    it.data.let {
-                        routsObserver.postValue(it)
                     }
                 }
             }, {

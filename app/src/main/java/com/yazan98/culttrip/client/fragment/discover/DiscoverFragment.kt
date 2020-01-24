@@ -6,9 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.yazan98.culttrip.client.R
 import com.yazan98.culttrip.client.adapter.CategoryAdapter
-import com.yazan98.culttrip.client.adapter.RoutsAdapter
 import com.yazan98.culttrip.data.models.response.Category
-import com.yazan98.culttrip.data.models.response.Route
 import com.yazan98.culttrip.domain.action.DiscoveryAction
 import com.yazan98.culttrip.domain.logic.DiscoveryViewModel
 import com.yazan98.culttrip.domain.state.DiscoveryState
@@ -43,11 +41,11 @@ class DiscoverFragment @Inject constructor() : VortexFragment<DiscoveryState, Di
             getController().execute(DiscoveryAction.GetDiscoveryAction())
         }
 
-        viewModel.routsObserver.observe(this, Observer {
-            GlobalScope.launch {
-                showRouts(it)
-            }
-        })
+//        viewModel.routsObserver.observe(this, Observer {
+//            GlobalScope.launch {
+////                showRouts(it)
+//            }
+//        })
     }
 
     override suspend fun getController(): DiscoveryViewModel {
@@ -94,18 +92,6 @@ class DiscoverFragment @Inject constructor() : VortexFragment<DiscoveryState, Di
                     linearHorizontalLayout(it)
                     this.adapter = CategoryAdapter(response)
                     (this.adapter as CategoryAdapter).context = it
-                }
-            }
-        }
-    }
-
-    private suspend fun showRouts(response: List<Route>) {
-        withContext(Dispatchers.Main) {
-            activity?.let {
-                RoutsRecycler?.apply {
-                    linearVerticalLayout(it)
-                    this.adapter = RoutsAdapter(response)
-                    (this.adapter as RoutsAdapter).context = it
                 }
             }
         }

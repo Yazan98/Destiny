@@ -4,9 +4,9 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class Route(
+data class Offer(
     var id: Long = 0,
-    var image: String = "",
     var name: String = "",
-    var places: Long = 0
+    var image: String = "",
+    var discount: Double = 0.0
 ): Parcelable

@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.yazan98.culttrip.client.R
-import com.yazan98.culttrip.client.adapter.CollectionsAdapter
-import com.yazan98.culttrip.data.models.response.Collection
+import com.yazan98.culttrip.client.adapter.OffersAdapter
+import com.yazan98.culttrip.data.models.response.Offer
 import com.yazan98.culttrip.domain.action.MainAction
 import com.yazan98.culttrip.domain.logic.MainViewModel
 import com.yazan98.culttrip.domain.state.MainState
@@ -64,10 +64,7 @@ class MainFragment @Inject constructor() : VortexFragment<MainState, MainAction,
     override suspend fun onStateChanged(newState: MainState) {
         withContext(Dispatchers.IO) {
             when (newState) {
-                is MainState.SuccessState -> {
-                    showPopularCollections(newState.get())
-                    showAllItems(newState.get())
-                }
+                is MainState.SuccessState -> showAllItems(newState.get())
                 is MainState.ErrorState -> showMessage(newState.get())
             }
         }
@@ -81,31 +78,13 @@ class MainFragment @Inject constructor() : VortexFragment<MainState, MainAction,
         }
     }
 
-    private suspend fun showPopularCollections(response: List<Collection>) {
+    private suspend fun showAllItems(response: List<Offer>) {
         withContext(Dispatchers.Main) {
-            val result = ArrayList<Collection>()
-            response.forEach {
-                if(it.popular.equals("POPULAR")) {
-                    result.add(it)
-                }
-            }
             activity?.let {
                 MainRecyclerView.apply {
                     this.linearHorizontalLayout(it)
-                    this.adapter = CollectionsAdapter(result)
-                    (this.adapter as CollectionsAdapter).context = it
-                }
-            }
-        }
-    }
-
-    private suspend fun showAllItems(response: List<Collection>) {
-        withContext(Dispatchers.Main) {
-            activity?.let {
-                MainRecyclerCollections.apply {
-                    this.linearVerticalLayout(it)
-                    this.adapter = CollectionsAdapter(response)
-                    (this.adapter as CollectionsAdapter).context = it
+                    this.adapter = OffersAdapter(response)
+                    (this.adapter as OffersAdapter).context = it
                 }
             }
         }

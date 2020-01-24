@@ -7,8 +7,8 @@ import com.facebook.drawee.view.SimpleDraweeView
 import kotlinx.android.synthetic.main.row_collection.view.*
 import javax.inject.Inject
 
-class CollectionViewHolder @Inject constructor(view: View): RecyclerView.ViewHolder(view) {
+class OffersViewHolder @Inject constructor(view: View): RecyclerView.ViewHolder(view) {
     val backgroundImage: SimpleDraweeView? = view.BackgroundImage
-    val des: TextView? =  view.textView2
-    val title: TextView? = view.textView3
+    val discount: TextView? =  view.DiscountOffer
+    val title: TextView? = view.OfferTitle
 }
