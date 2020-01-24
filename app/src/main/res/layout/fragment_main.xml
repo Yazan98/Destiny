@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
         android:id="@+id/MainContainer"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,33 +18,36 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_5sdp"
-                android:background="@drawable/bg_btn"
                 android:layout_marginTop="@dimen/_20sdp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/bg_btn"
                 android:orientation="horizontal"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:layout_width="@dimen/_15sdp"
-                android:src="@drawable/location"
-                android:layout_height="@dimen/_15sdp"/>
+                <ImageView
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:src="@drawable/location" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_3sdp"
-                    android:textSize="@dimen/_10sdp"
                     android:text="Jordan City"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10sdp" />
 
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/MainRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/MainRecyclerView"
                 android:layout_marginTop="@dimen/_5sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -52,35 +55,56 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
             <TextView
+                android:id="@+id/Rec"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:text="@string/recommendations"
                 android:textColor="@color/black"
-                android:id="@+id/Rec"
                 android:textSize="@dimen/_15sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/MainRecyclerView" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/MainRecyclerCollections"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/MainRecyclerCollections"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/Rec" />
+
+            <TextView
+                android:id="@+id/Rec2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/red"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/MainRecyclerCollections" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:id="@+id/RecipesRecycler"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Rec2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
     <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone"
         android:id="@+id/MainLoading"
-        android:layout_height="wrap_content"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

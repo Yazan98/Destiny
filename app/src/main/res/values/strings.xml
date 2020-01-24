@@ -27,4 +27,5 @@
     <string name="categories">Categories</string>
     <string name="popular_routs">Popular Routs</string>
     <string name="places">Places</string>
+    <string name="red">Recommended</string>
 </resources>

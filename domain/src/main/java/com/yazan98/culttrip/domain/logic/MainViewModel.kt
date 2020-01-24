@@ -2,7 +2,8 @@ package com.yazan98.culttrip.domain.logic
 
 import androidx.lifecycle.MutableLiveData
 import com.yazan98.culttrip.data.RepositoriesComponentImpl
-import com.yazan98.culttrip.data.models.response.Offer
+import com.yazan98.culttrip.data.models.response.Category
+import com.yazan98.culttrip.data.models.response.Recipe
 import com.yazan98.culttrip.data.repository.MainRepository
 import com.yazan98.culttrip.domain.action.MainAction
 import com.yazan98.culttrip.domain.state.MainState
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor() : VortexViewModel<MainState, MainAction>() {
 
-    val offers: MutableLiveData<List<Offer>> by lazy { MutableLiveData<List<Offer>>() }
+    val categories: MutableLiveData<List<Category>> by lazy { MutableLiveData<List<Category>>() }
+    val recipes: MutableLiveData<List<Recipe>> by lazy { MutableLiveData<List<Recipe>>() }
     private val repository: MainRepository by lazy {
         RepositoriesComponentImpl().getCollectionRepository()
     }
@@ -24,9 +26,30 @@ class MainViewModel @Inject constructor() : VortexViewModel<MainState, MainActio
         withContext(Dispatchers.IO) {
             if (getStateHandler().value is MainState.ErrorState || getStateHandler().value == null) {
                 when (newAction) {
-                    is MainAction.GetCollection -> getAllOffers()
+                    is MainAction.GetMainPageDetails -> {
+                        getAllOffers()
+                        getAllCategories()
+                        getRecipes()
+                    }
                 }
             }
+        }
+    }
+
+    private suspend fun getAllCategories() {
+        withContext(Dispatchers.IO) {
+            addRxRequest(repository.getCategories().subscribe({
+                GlobalScope.launch {
+                    categories.postValue(it.data)
+                }
+            }, {
+                GlobalScope.launch {
+                    it.message?.let {
+                        acceptLoadingState(false)
+                        acceptNewState(MainState.ErrorState(it))
+                    }
+                }
+            }))
         }
     }
 
@@ -38,6 +61,25 @@ class MainViewModel @Inject constructor() : VortexViewModel<MainState, MainActio
                     it.data?.let {
                         acceptLoadingState(false)
                         acceptNewState(MainState.SuccessState(it))
+                    }
+                }
+            }, {
+                GlobalScope.launch {
+                    it.message?.let {
+                        acceptLoadingState(false)
+                        acceptNewState(MainState.ErrorState(it))
+                    }
+                }
+            }))
+        }
+    }
+
+    private suspend fun getRecipes() {
+        withContext(Dispatchers.IO) {
+            addRxRequest(repository.getRecipes().subscribe({
+                GlobalScope.launch {
+                    it.data?.let {
+                        recipes.postValue(it)
                     }
                 }
             }, {

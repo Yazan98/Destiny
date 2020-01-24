@@ -2,10 +2,15 @@ package com.yazan98.culttrip.client.fragment.main
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.yazan98.culttrip.client.R
+import com.yazan98.culttrip.client.adapter.CategoryAdapter
 import com.yazan98.culttrip.client.adapter.OffersAdapter
+import com.yazan98.culttrip.client.adapter.RecipesAdapter
+import com.yazan98.culttrip.data.models.response.Category
 import com.yazan98.culttrip.data.models.response.Offer
+import com.yazan98.culttrip.data.models.response.Recipe
 import com.yazan98.culttrip.domain.action.MainAction
 import com.yazan98.culttrip.domain.logic.MainViewModel
 import com.yazan98.culttrip.domain.state.MainState
@@ -41,8 +46,20 @@ class MainFragment @Inject constructor() : VortexFragment<MainState, MainAction,
 
     override fun initScreen(view: View) {
         GlobalScope.launch {
-            getController().execute(MainAction.GetCollection())
+            getController().execute(MainAction.GetMainPageDetails())
         }
+
+        viewModel.categories.observe(this, Observer {
+            GlobalScope.launch {
+                showAllCategories(it)
+            }
+        })
+
+        viewModel.recipes.observe(this, Observer {
+            GlobalScope.launch {
+                showRecipesList(it)
+            }
+        })
     }
 
     override suspend fun getLoadingState(newState: Boolean) {
@@ -90,10 +107,35 @@ class MainFragment @Inject constructor() : VortexFragment<MainState, MainAction,
         }
     }
 
+    private suspend fun showAllCategories(response: List<Category>) {
+        withContext(Dispatchers.Main) {
+            activity?.let {
+                MainRecyclerCollections?.apply {
+                    this.linearHorizontalLayout(it)
+                    this.adapter = CategoryAdapter(response)
+                    (this.adapter as CategoryAdapter).context = it
+                }
+            }
+        }
+    }
+
+    private suspend fun showRecipesList(response: List<Recipe>) {
+        withContext(Dispatchers.Main) {
+            activity?.let {
+                RecipesRecycler?.apply {
+                    this.linearVerticalLayout(it)
+                    this.adapter = RecipesAdapter(response)
+                    (this.adapter as RecipesAdapter).context = it
+                }
+            }
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         MainRecyclerCollections?.adapter = null
         MainRecyclerView?.adapter = null
+        RecipesRecycler?.adapter = null
     }
 
 }
