@@ -13,4 +13,5 @@ class PopularViewHolder @Inject constructor(view: View): RecyclerView.ViewHolder
     val raing: RatingBar? = view.Rating
     val price: TextView? = view.PriceRecipe
     val image: SimpleDraweeView? = view.simpleDraweeView
+    val item: View? = view.PopularItem
 }

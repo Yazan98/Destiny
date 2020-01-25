@@ -12,4 +12,5 @@ class RecipesViewHolder @Inject constructor(view: View): RecyclerView.ViewHolder
     val name: TextView? = view.textView2
     val description: TextView? = view.DesRecipe
     val price: TextView? = view.PriceRecipe
+    val item: View? = view.RecipeItem
 }

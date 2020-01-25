@@ -3,12 +3,16 @@ package com.yazan98.culttrip.client.adapter
 import android.view.View
 import com.yazan98.culttrip.client.R
 import com.yazan98.culttrip.client.adapter.holders.PopularViewHolder
+import com.yazan98.culttrip.client.adapter.listeners.RecipeListener
 import com.yazan98.culttrip.data.models.response.Recipe
 import io.vortex.android.utils.random.VortexBaseAdapter
 import io.vortex.android.utils.random.VortexImageLoaders
 import javax.inject.Inject
 
-class PopularRecipesAdapter @Inject constructor(private val data: List<Recipe>) : VortexBaseAdapter<PopularViewHolder>() {
+class PopularRecipesAdapter @Inject constructor(
+    private val data: List<Recipe>,
+    private var listener: RecipeListener? = null
+) : VortexBaseAdapter<PopularViewHolder>() {
 
     override fun getItemCount(): Int {
         return data.size
@@ -47,5 +51,15 @@ class PopularRecipesAdapter @Inject constructor(private val data: List<Recipe>) 
             }
         }
 
+        holder.item?.let {
+            it.setOnClickListener {
+                listener?.onRecipeClicked(data[position].id)
+            }
+        }
+
+    }
+
+    fun destroy() {
+        listener = null
     }
 }

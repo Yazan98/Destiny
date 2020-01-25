@@ -7,10 +7,11 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/CategoryImage"
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_60sdp"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_90sdp"
         android:layout_margin="@dimen/_10sdp"
         android:scaleType="fitCenter"
+        app:roundedCornerRadius="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

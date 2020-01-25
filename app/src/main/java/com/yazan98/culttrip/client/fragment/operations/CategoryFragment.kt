@@ -3,9 +3,11 @@ package com.yazan98.culttrip.client.fragment.operations
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.yazan98.culttrip.client.R
 import com.yazan98.culttrip.client.adapter.PopularRecipesAdapter
 import com.yazan98.culttrip.client.adapter.RecipesAdapter
+import com.yazan98.culttrip.client.adapter.listeners.RecipeListener
 import com.yazan98.culttrip.data.models.response.Recipe
 import com.yazan98.culttrip.domain.action.CategoryAction
 import com.yazan98.culttrip.domain.logic.CategoryViewModel
@@ -101,7 +103,11 @@ class CategoryFragment @Inject constructor() :
             activity?.let {
                 PopularRecipes?.apply {
                     linearHorizontalLayout(it)
-                    this.adapter = PopularRecipesAdapter(response)
+                    this.adapter = PopularRecipesAdapter(response, object : RecipeListener {
+                        override fun onRecipeClicked(id: Long) {
+                            findNavController().navigate(R.id.action_discoverFragment_to_recipeFragment)
+                        }
+                    })
                     (this.adapter as PopularRecipesAdapter).context = it
                 }
             }
@@ -113,7 +119,11 @@ class CategoryFragment @Inject constructor() :
             activity?.let {
                 RoutsRecycler?.apply {
                     linearVerticalLayout(it)
-                    this.adapter = RecipesAdapter(response)
+                    this.adapter = RecipesAdapter(response, object : RecipeListener {
+                        override fun onRecipeClicked(id: Long) {
+                            findNavController().navigate(R.id.action_discoverFragment_to_recipeFragment)
+                        }
+                    })
                     (this.adapter as RecipesAdapter).context = it
                 }
             }
@@ -122,6 +132,7 @@ class CategoryFragment @Inject constructor() :
 
     override fun onDestroyView() {
         super.onDestroyView()
+        (PopularRecipes?.adapter as PopularRecipesAdapter).destroy()
         PopularRecipes?.adapter = null
         RoutsRecycler?.adapter = null
     }
