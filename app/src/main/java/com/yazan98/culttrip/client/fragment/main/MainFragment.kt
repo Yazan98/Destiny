@@ -8,12 +8,15 @@ import com.yazan98.culttrip.client.R
 import com.yazan98.culttrip.client.adapter.CategoryAdapter
 import com.yazan98.culttrip.client.adapter.OffersAdapter
 import com.yazan98.culttrip.client.adapter.RecipesAdapter
+import com.yazan98.culttrip.client.adapter.listeners.CategoryListener
+import com.yazan98.culttrip.client.screen.OperationsScreen
 import com.yazan98.culttrip.data.models.response.Category
 import com.yazan98.culttrip.data.models.response.Offer
 import com.yazan98.culttrip.data.models.response.Recipe
 import com.yazan98.culttrip.domain.action.MainAction
 import com.yazan98.culttrip.domain.logic.MainViewModel
 import com.yazan98.culttrip.domain.state.MainState
+import io.vortex.android.prefs.VortexPrefs
 import io.vortex.android.ui.fragment.VortexFragment
 import io.vortex.android.utils.ui.goneView
 import io.vortex.android.utils.ui.linearHorizontalLayout
@@ -112,7 +115,14 @@ class MainFragment @Inject constructor() : VortexFragment<MainState, MainAction,
             activity?.let {
                 MainRecyclerCollections?.apply {
                     this.linearHorizontalLayout(it)
-                    this.adapter = CategoryAdapter(response)
+                    this.adapter = CategoryAdapter(response, object : CategoryListener {
+                        override fun onCategoryClicked(id: Long) {
+                            GlobalScope.launch {
+                                VortexPrefs.put("CategoryId", id.toInt())
+                                startScreen<OperationsScreen>(false)
+                            }
+                        }
+                    })
                     (this.adapter as CategoryAdapter).context = it
                 }
             }
@@ -133,6 +143,7 @@ class MainFragment @Inject constructor() : VortexFragment<MainState, MainAction,
 
     override fun onDestroyView() {
         super.onDestroyView()
+        (MainRecyclerCollections?.adapter as CategoryAdapter).destroyTheAdapter()
         MainRecyclerCollections?.adapter = null
         MainRecyclerView?.adapter = null
         RecipesRecycler?.adapter = null

@@ -10,4 +10,5 @@ import javax.inject.Inject
 class CategoryViewHolder @Inject constructor(view: View): RecyclerView.ViewHolder(view) {
     val image: SimpleDraweeView? = view.CategoryImage
     val name: TextView? = view.TitleCategory
+    val item: View? = view.CategoryItem
 }

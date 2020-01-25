@@ -3,12 +3,16 @@ package com.yazan98.culttrip.client.adapter
 import android.view.View
 import com.yazan98.culttrip.client.R
 import com.yazan98.culttrip.client.adapter.holders.CategoryViewHolder
+import com.yazan98.culttrip.client.adapter.listeners.CategoryListener
 import com.yazan98.culttrip.data.models.response.Category
 import io.vortex.android.utils.random.VortexBaseAdapter
 import io.vortex.android.utils.random.VortexImageLoaders
 import javax.inject.Inject
 
-class CategoryAdapter @Inject constructor(private val data: List<Category>): VortexBaseAdapter<CategoryViewHolder>() {
+class CategoryAdapter @Inject constructor(
+    private val data: List<Category>,
+    private var listener: CategoryListener? = null
+) : VortexBaseAdapter<CategoryViewHolder>() {
     override fun getItemCount(): Int {
         return data.size
     }
@@ -34,6 +38,16 @@ class CategoryAdapter @Inject constructor(private val data: List<Category>): Vor
             }
         }
 
+        holder.item?.let {
+            it.setOnClickListener {
+                listener?.onCategoryClicked(data[position].id)
+            }
+        }
+
+    }
+
+    fun destroyTheAdapter() {
+        this.listener = null
     }
 
 }
