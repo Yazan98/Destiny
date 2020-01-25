@@ -105,7 +105,9 @@ class CategoryFragment @Inject constructor() :
                     linearHorizontalLayout(it)
                     this.adapter = PopularRecipesAdapter(response, object : RecipeListener {
                         override fun onRecipeClicked(id: Long) {
-                            findNavController().navigate(R.id.action_discoverFragment_to_recipeFragment)
+                            val data = Bundle()
+                            data.putLong("RecipeId", id)
+                            findNavController().navigate(R.id.action_discoverFragment_to_recipeFragment, data)
                         }
                     })
                     (this.adapter as PopularRecipesAdapter).context = it
@@ -121,7 +123,9 @@ class CategoryFragment @Inject constructor() :
                     linearVerticalLayout(it)
                     this.adapter = RecipesAdapter(response, object : RecipeListener {
                         override fun onRecipeClicked(id: Long) {
-                            findNavController().navigate(R.id.action_discoverFragment_to_recipeFragment)
+                            val data = Bundle()
+                            data.putLong("RecipeId", id)
+                            findNavController().navigate(R.id.action_discoverFragment_to_recipeFragment, data)
                         }
                     })
                     (this.adapter as RecipesAdapter).context = it

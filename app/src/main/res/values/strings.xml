@@ -30,4 +30,6 @@
     <string name="red">Recommended</string>
     <string name="popular">Popular Recipes</string>
     <string name="promoted">Promoted Recipes</string>
+    <string name="add_item">Add Item To Cart</string>
+    <string name="comments">View Comments</string>
 </resources>

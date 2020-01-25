@@ -3,6 +3,7 @@ package com.yazan98.culttrip.data
 import com.yazan98.culttrip.data.repository.AuthRepository
 import com.yazan98.culttrip.data.repository.MainRepository
 import com.yazan98.culttrip.data.repository.CategoryRepository
+import com.yazan98.culttrip.data.repository.RecipeRepository
 
 @motif.Scope
 interface RepositoriesComponent {
@@ -12,6 +13,8 @@ interface RepositoriesComponent {
     fun getCollectionRepository(): MainRepository
 
     fun getDiscoveryRepository(): CategoryRepository
+
+    fun getRecipesRepository(): RecipeRepository
 
     @motif.Objects
     open class Objects {
@@ -26,6 +29,10 @@ interface RepositoriesComponent {
 
         fun getDiscoveryRepo(): CategoryRepository {
             return CategoryRepository()
+        }
+
+        fun getRecipe(): RecipeRepository {
+            return RecipeRepository()
         }
     }
 

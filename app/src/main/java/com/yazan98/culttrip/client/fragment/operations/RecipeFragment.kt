@@ -1,26 +1,113 @@
 package com.yazan98.culttrip.client.fragment.operations
 
+import android.annotation.SuppressLint
+import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.yazan98.culttrip.client.R
-import io.vortex.android.ui.fragment.VortexBaseFragment
+import com.yazan98.culttrip.data.models.response.Recipe
+import com.yazan98.culttrip.domain.action.RecipeAction
+import com.yazan98.culttrip.domain.logic.RecipeViewModel
+import com.yazan98.culttrip.domain.state.RecipeState
+import io.vortex.android.ui.fragment.VortexFragment
 import io.vortex.android.utils.random.VortexImageLoaders
+import io.vortex.android.utils.ui.goneView
+import io.vortex.android.utils.ui.showView
 import kotlinx.android.synthetic.main.fragment_recipe.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class RecipeFragment @Inject constructor() : VortexBaseFragment() {
+class RecipeFragment @Inject constructor() :
+    VortexFragment<RecipeState, RecipeAction, RecipeViewModel>() {
+
+    private lateinit var viewModel: RecipeViewModel
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.run {
+            viewModel = ViewModelProvider(this).get(RecipeViewModel::class.java)
+        }
+    }
 
     override fun getLayoutRes(): Int {
         return R.layout.fragment_recipe
     }
 
     override fun initScreen(view: View) {
-        simpleDraweeView2?.let {
-            VortexImageLoaders.loadLargeImageWithFresco(
-                "https://images.unsplash.com/photo-1558030006-450675393462?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1789&q=80",
-                it,
-                800,
-                900
-            )
+        GlobalScope.launch {
+            arguments?.let {
+                it.getLong("RecipeId", 1)?.also {
+                    getController().execute(RecipeAction.GetRecipeById(it))
+                }
+            }
+        }
+    }
+
+    override suspend fun onStateChanged(newState: RecipeState) {
+        withContext(Dispatchers.IO) {
+            when (newState) {
+                is RecipeState.SuccessState -> showRecipeInfo(newState.get())
+                is RecipeState.ErrorState -> showMessage(newState.get())
+            }
+        }
+    }
+
+    private suspend fun showMessage(message: String) {
+        withContext(Dispatchers.Main) {
+            activity?.let {
+                messageController.showSnackbarWithColor(it, message, R.color.colorPrimary)
+            }
+        }
+    }
+
+    override suspend fun getController(): RecipeViewModel {
+        return viewModel
+    }
+
+    override suspend fun getLoadingState(newState: Boolean) {
+        withContext(Dispatchers.Main) {
+            when (newState) {
+                true -> {
+                    RecipeLoading?.showView()
+                    ContentView?.goneView()
+                }
+
+                false -> {
+                    RecipeLoading?.goneView()
+                    ContentView?.showView()
+                }
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private suspend fun showRecipeInfo(response: Recipe) {
+        withContext(Dispatchers.Main) {
+            simpleDraweeView2?.let {
+                VortexImageLoaders.loadLargeImageWithFresco(response.image, it, 800, 900)
+            }
+
+            textView3?.let {
+                it.text = response.name
+            }
+
+            textView6?.let {
+                it.text = response.description
+            }
+
+            TimeRecipe?.let {
+                it.text = response.numberOfPieces
+            }
+
+            RecipeRating?.let {
+                it.text = response.rating.toString()
+            }
+
+            RecipePrice?.let {
+                it.text = "${response.price} $"
+            }
         }
     }
 
