@@ -15,20 +15,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/CategoryToolbar"
+                    android:visibility="gone"
+                    app:titleTextColor="@color/colorPrimary" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/categories"
+                android:layout_marginStart="12dp"
+                android:text="@string/popular"
                 android:textColor="@color/black"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:textSize="@dimen/_15sdp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/CategoryRecycler"
+                android:id="@+id/PopularRecipes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
@@ -42,11 +57,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/popular_routs"
+                android:text="@string/promoted"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/CategoryRecycler" />
+                app:layout_constraintTop_toBottomOf="@+id/PopularRecipes" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"

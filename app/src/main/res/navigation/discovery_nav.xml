@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/discoverFragment"
         tools:layout="@layout/fragment_discover"
-        android:name="com.yazan98.culttrip.client.fragment.discover.DiscoverFragment"
+        android:name="com.yazan98.culttrip.client.fragment.operations.CategoryFragment"
         android:label="DiscoverFragment" />
 </navigation>

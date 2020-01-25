@@ -15,5 +15,6 @@ data class Recipe(
     var fullDescription: String = "",
     var gms: String = "",
     var numberOfPieces: String = "",
-    var popular: Boolean = true
+    var popular: Boolean = true,
+    var promoted: Boolean = false
 ): Parcelable

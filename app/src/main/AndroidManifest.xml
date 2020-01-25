@@ -34,7 +34,7 @@
             android:screenOrientation="fullSensor" />
 
         <activity
-            android:name=".screen.DiscoveryScreen"
+            android:name=".screen.OperationsScreen"
             android:screenOrientation="fullSensor" />
     </application>
 

@@ -28,4 +28,6 @@
     <string name="popular_routs">Popular Routs</string>
     <string name="places">Places</string>
     <string name="red">Recommended</string>
+    <string name="popular">Popular Recipes</string>
+    <string name="promoted">Promoted Recipes</string>
 </resources>

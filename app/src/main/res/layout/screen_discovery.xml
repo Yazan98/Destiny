@@ -17,7 +17,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:textColor="@color/colorPrimary"
-                android:text="@string/arts_culture"
+                android:text="@string/app_name"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"/>
 

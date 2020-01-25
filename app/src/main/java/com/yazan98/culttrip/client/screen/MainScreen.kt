@@ -24,7 +24,7 @@ class MainScreen : VortexScreen() {
         MainFloatingButton?.apply {
             this.setOnClickListener {
                 GlobalScope.launch {
-                    startScreen<DiscoveryScreen>(false)
+                    startScreen<OperationsScreen>(false)
                 }
             }
         }
