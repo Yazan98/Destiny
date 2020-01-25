@@ -4,6 +4,7 @@ import com.yazan98.culttrip.data.DestinyRepository
 import com.yazan98.culttrip.data.api.RecipeApi
 import com.yazan98.culttrip.data.models.response.DestinyResponse
 import com.yazan98.culttrip.data.models.response.Recipe
+import com.yazan98.culttrip.data.models.response.RecipeComment
 import io.reactivex.Flowable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -19,6 +20,10 @@ class RecipeRepository @Inject constructor() : DestinyRepository<RecipeApi>() {
 
     suspend fun getRecipeById(id: Long): Flowable<DestinyResponse<Recipe>> {
         return getService().getRecipeInfoById(id)
+    }
+
+    suspend fun getCommentsByRecipeId(id: Long): Flowable<DestinyResponse<List<RecipeComment>>> {
+        return getService().getAllCommentsByRecipeId(id)
     }
 
 }

@@ -179,6 +179,7 @@
                 android:layout_marginTop="@dimen/_60sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:text="@string/comments"
+                android:id="@+id/CommentsButton"
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toTopOf="@+id/button"
                 app:layout_constraintCircleRadius="@dimen/_30sdp"

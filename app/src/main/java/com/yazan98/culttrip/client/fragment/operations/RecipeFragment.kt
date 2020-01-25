@@ -21,10 +21,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class RecipeFragment @Inject constructor() :
-    VortexFragment<RecipeState, RecipeAction, RecipeViewModel>() {
+class RecipeFragment @Inject constructor() : VortexFragment<RecipeState, RecipeAction, RecipeViewModel>() {
 
     private lateinit var viewModel: RecipeViewModel
+    private val commentsFragment: RecipeCommentsFragment by lazy {
+        RecipeCommentsFragment()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.run {
@@ -70,6 +73,21 @@ class RecipeFragment @Inject constructor() :
                 GlobalScope.launch {
                     getController().execute(RecipeAction.AddToDatabase())
                     executeAddRecipe()
+                }
+            }
+        }
+
+        CommentsButton?.apply {
+            this.setOnClickListener {
+                viewModel.getStateHandler().value?.let {
+                    (it as RecipeState.SuccessState).get().let { recipe ->
+                        activity?.let {
+                            GlobalScope.launch {
+                                commentsFragment.getAllComments(recipe.id)
+                            }
+                            commentsFragment.show(it.supportFragmentManager, "")
+                        }
+                    }
                 }
             }
         }
