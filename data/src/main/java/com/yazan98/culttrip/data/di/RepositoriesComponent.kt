@@ -1,4 +1,4 @@
-package com.yazan98.culttrip.data
+package com.yazan98.culttrip.data.di
 
 import com.yazan98.culttrip.data.repository.AuthRepository
 import com.yazan98.culttrip.data.repository.MainRepository

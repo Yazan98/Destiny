@@ -22,6 +22,7 @@ buildscript {
         maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
         maven { url "https://dl.bintray.com/yt98/Vortex" }
+        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local' }
     }
 
     dependencies {
@@ -32,6 +33,7 @@ buildscript {
         classpath "org.jmailen.gradle:kotlinter-gradle:${rootProject.ext.PluginsVersions.KtlintPluginV}"
         classpath "io.fabric.tools:gradle:${rootProject.ext.PluginsVersions.FabricPluginV}"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${rootProject.ext.PluginsVersions.NavigationPluginV}"
+        classpath "io.realm:realm-gradle-plugin:7.0.0-beta-SNAPSHOT"
     }
 
 }
@@ -61,6 +63,7 @@ subprojects {
         apply plugin: "${rootProject.ext.KotlinAndroidPlugin}"
         apply plugin: "${rootProject.ext.KotlinAndroidExPlugin}"
         apply plugin: "${rootProject.ext.KotlinKaptPlugin}"
+        apply plugin: "${rootProject.ext.RealmPlugin}"
 
         android {
 

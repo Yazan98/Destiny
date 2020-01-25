@@ -1,13 +1,10 @@
-package com.yazan98.culttrip.data
+package com.yazan98.culttrip.data.di
 
 
-import io.vortex.android.prefs.VortexPrefs
+import com.yazan98.culttrip.data.BuildConfig
 import io.vortex.android.prefs.VortexPrefsConfig
 import io.vortex.android.prefs.VortexPrefsConsts
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

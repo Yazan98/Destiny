@@ -143,7 +143,8 @@ class MainFragment @Inject constructor() : VortexFragment<MainState, MainAction,
 
     override fun onDestroyView() {
         super.onDestroyView()
-        (MainRecyclerCollections?.adapter as CategoryAdapter).destroyTheAdapter()
+        viewModel.getRxRepository().clearRepository()
+        (MainRecyclerCollections?.adapter as CategoryAdapter?)?.destroyTheAdapter()
         MainRecyclerCollections?.adapter = null
         MainRecyclerView?.adapter = null
         RecipesRecycler?.adapter = null

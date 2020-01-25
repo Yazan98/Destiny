@@ -8,8 +8,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:id="@+id/ContentView"
+        android:visibility="gone"
         android:layout_height="match_parent">
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -123,6 +123,7 @@
 
                 <ImageView
                     android:layout_width="@dimen/_20sdp"
+                    android:id="@+id/AddPrice"
                     android:layout_height="@dimen/_20sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:src="@drawable/add"
@@ -162,7 +163,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:text="@string/add_item"
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -175,17 +176,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_60sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
                 android:text="@string/comments"
-                android:layout_marginTop="@dimen/_40sdp"
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toTopOf="@+id/button"
                 app:layout_constraintCircleRadius="@dimen/_30sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                app:layout_constraintVertical_bias="0.63" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

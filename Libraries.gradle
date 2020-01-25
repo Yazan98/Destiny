@@ -24,7 +24,7 @@ ext {
     SdpV = "1.0.6"
     motifV = "0.0.10"
     daggerV = "2.24"
-    VortexV = "1.0.12"
+    VortexV = "1.0.13"
     RetrofitiInterceptorV = "3.12.1"
     RetrofitGsonAdapterV = "2.5.0"
 

@@ -1,9 +1,9 @@
 apply plugin: "${rootProject.ext.AndroidPlugin}"
 apply plugin: "${rootProject.ext.KotlinAndroidPlugin}"
 apply plugin: "${rootProject.ext.KotlinAndroidExPlugin}"
-//apply plugin: "${rootProject.ext.EasyLauncherPlugin}"
 apply plugin: "${rootProject.ext.KotlinKaptPlugin}"
 apply plugin: "${rootProject.ext.navigationPlugin}"
+apply plugin: "${rootProject.ext.RealmPlugin}"
 
 android {
 
@@ -123,6 +123,10 @@ android {
         }
     }
 
+}
+
+realm {
+    kotlinExtensionsEnabled = true
 }
 
 dependencies { configuration ->

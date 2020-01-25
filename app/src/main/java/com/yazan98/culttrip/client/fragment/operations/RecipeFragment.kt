@@ -3,6 +3,7 @@ package com.yazan98.culttrip.client.fragment.operations
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.yazan98.culttrip.client.R
 import com.yazan98.culttrip.data.models.response.Recipe
@@ -43,6 +44,36 @@ class RecipeFragment @Inject constructor() :
                 }
             }
         }
+
+        viewModel.editedPrice.observe(this, Observer { result ->
+            RecipePrice?.let {
+                it.text = "Price : $result $"
+            }
+        })
+
+        viewModel.portions.observe(this, Observer { portions ->
+            textView7?.let {
+                it.text = "Portions (${portions})"
+            }
+        })
+
+        AddPrice?.apply {
+            this.setOnClickListener {
+                GlobalScope.launch {
+                    getController().execute(RecipeAction.AddPrice())
+                }
+            }
+        }
+
+        button?.apply {
+            this.setOnClickListener {
+                GlobalScope.launch {
+                    getController().execute(RecipeAction.AddToDatabase())
+                    executeAddRecipe()
+                }
+            }
+        }
+
     }
 
     override suspend fun onStateChanged(newState: RecipeState) {
@@ -82,6 +113,13 @@ class RecipeFragment @Inject constructor() :
         }
     }
 
+    private suspend fun executeAddRecipe() {
+        withContext(Dispatchers.Main) {
+            showMessage(getString(R.string.recipe_success))
+            activity?.onBackPressed()
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     private suspend fun showRecipeInfo(response: Recipe) {
         withContext(Dispatchers.Main) {
@@ -109,6 +147,11 @@ class RecipeFragment @Inject constructor() :
                 it.text = "${response.price} $"
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.getRxRepository().clearRepository()
     }
 
 }

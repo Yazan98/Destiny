@@ -136,7 +136,8 @@ class CategoryFragment @Inject constructor() :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        (PopularRecipes?.adapter as PopularRecipesAdapter).destroy()
+        viewModel.getRxRepository().clearRepository()
+        (PopularRecipes?.adapter as PopularRecipesAdapter?)?.destroy()
         PopularRecipes?.adapter = null
         RoutsRecycler?.adapter = null
     }

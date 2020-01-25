@@ -1,9 +1,11 @@
 package com.yazan98.culttrip.data
 
+import com.yazan98.culttrip.data.di.RepositoryComponent
+import com.yazan98.culttrip.data.di.RepositoryComponentImpl
 import io.vortex.android.data.VortexRepository
 import io.vortex.android.models.VortexRequestDetailsProvider
 
-abstract class CulttripRepository<Api> : VortexRepository<Api>() {
+abstract class DestinyRepository<Api> : VortexRepository<Api>() {
 
     private val provider: RepositoryComponent by lazy {
         RepositoryComponentImpl()

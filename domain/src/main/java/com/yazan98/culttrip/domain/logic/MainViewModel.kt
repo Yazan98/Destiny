@@ -1,7 +1,7 @@
 package com.yazan98.culttrip.domain.logic
 
 import androidx.lifecycle.MutableLiveData
-import com.yazan98.culttrip.data.RepositoriesComponentImpl
+import com.yazan98.culttrip.data.di.RepositoriesComponentImpl
 import com.yazan98.culttrip.data.models.response.Category
 import com.yazan98.culttrip.data.models.response.Recipe
 import com.yazan98.culttrip.data.repository.MainRepository

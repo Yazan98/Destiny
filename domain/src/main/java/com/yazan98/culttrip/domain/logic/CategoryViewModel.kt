@@ -1,6 +1,6 @@
 package com.yazan98.culttrip.domain.logic
 
-import com.yazan98.culttrip.data.RepositoriesComponentImpl
+import com.yazan98.culttrip.data.di.RepositoriesComponentImpl
 import com.yazan98.culttrip.data.repository.CategoryRepository
 import com.yazan98.culttrip.domain.action.CategoryAction
 import com.yazan98.culttrip.domain.state.CategoryState
