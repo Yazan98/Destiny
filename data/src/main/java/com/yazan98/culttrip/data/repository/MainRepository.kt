@@ -6,7 +6,6 @@ import com.yazan98.culttrip.data.models.response.Category
 import com.yazan98.culttrip.data.models.response.DestinyResponse
 import com.yazan98.culttrip.data.models.response.Offer
 import com.yazan98.culttrip.data.models.response.Recipe
-import io.reactivex.Flowable
 import io.reactivex.Single
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -29,7 +28,7 @@ class MainRepository @Inject constructor() : CulttripRepository<MainApi>() {
     }
 
     suspend fun getRecipes(): Single<DestinyResponse<List<Recipe>>> {
-        return getService().getAllRecipes()
+        return getService().getPopularRecipes()
     }
 
 }

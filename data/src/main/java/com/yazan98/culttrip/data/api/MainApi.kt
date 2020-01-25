@@ -16,7 +16,7 @@ interface MainApi {
     @GET("categories")
     fun getAllCategories(): Single<DestinyResponse<List<Category>>>
 
-    @GET("foods")
-    fun getAllRecipes(): Single<DestinyResponse<List<Recipe>>>
+    @GET("recipes?popular=true")
+    fun getPopularRecipes(): Single<DestinyResponse<List<Recipe>>>
 
 }
