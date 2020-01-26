@@ -7,6 +7,8 @@ import kotlinx.android.parcel.Parcelize
 class RecipeComment(
     var id: Long = 0,
     var comment: String = "",
-    var profile: Profile,
-    var recipeId: Long
+    var name: String = "",
+    var image: String = "",
+    val profileId: Long = 0,
+    var recipeId: Long = 0
 ): Parcelable

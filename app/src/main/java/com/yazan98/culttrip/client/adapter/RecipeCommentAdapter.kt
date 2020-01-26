@@ -8,8 +8,7 @@ import io.vortex.android.utils.random.VortexBaseAdapter
 import io.vortex.android.utils.random.VortexImageLoaders
 import javax.inject.Inject
 
-class RecipeCommentAdapter @Inject constructor(private val data: List<RecipeComment>) :
-    VortexBaseAdapter<RecipeCommentViewHolder>() {
+class RecipeCommentAdapter @Inject constructor(private val data: ArrayList<RecipeComment>) : VortexBaseAdapter<RecipeCommentViewHolder>() {
 
     override fun getItemCount(): Int {
         return data.size
@@ -31,16 +30,21 @@ class RecipeCommentAdapter @Inject constructor(private val data: List<RecipeComm
         }
 
         holder.image?.let {
-            data[position].profile.image?.let { result ->
+            data[position].image?.let { result ->
                 VortexImageLoaders.loadLargeImageWithFresco(result, it, 200, 200)
             }
         }
 
         holder.name?.let {
-            data[position].profile.username?.let { result ->
+            data[position].name?.let { result ->
                 it.text = result
             }
         }
+    }
+
+    fun addItem(item: RecipeComment) {
+        this.data.add(item)
+        notifyDataSetChanged()
     }
 
 }

@@ -1,6 +1,7 @@
 package com.yazan98.culttrip.client.fragment.reg
 
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.yazan98.culttrip.client.R
 import com.yazan98.culttrip.client.screen.MainScreen
@@ -43,7 +44,7 @@ class RegisterFragment @Inject constructor() :
 
         RegisterButtonMain?.apply {
             this.setOnClickListener {
-                GlobalScope.launch {
+                viewLifecycleOwner.lifecycleScope.launch {
                     when {
                         EmailField?.text.toString().trim().isEmpty() -> showMessage(getString(R.string.email_required))
                         PasswordField?.text.toString().trim().isEmpty() -> showMessage(getString(R.string.pass_required))
@@ -61,7 +62,7 @@ class RegisterFragment @Inject constructor() :
                                         NameField?.text.toString().trim(),
                                         PasswordField?.text.toString().trim(),
                                         EmailField?.text.toString().trim(),
-                                        "image-url-here",
+                                        ApplicationConsts.IMAGE,
                                         PhoneNumberField?.text.toString().trim(),
                                         RegisterLocation(name = LocationField?.text.toString().trim())
                                     )
@@ -91,7 +92,7 @@ class RegisterFragment @Inject constructor() :
                     .setTitle(getString(R.string.register_completed))
                     .setMessage("Hi Mr, ${response.user.username} Your Account Created Successfully , Welcome To Culttrip Client")
                     .setPositiveButton("Ok") { dialog, which ->
-                        GlobalScope.launch {
+                        viewLifecycleOwner.lifecycleScope.launch {
                             saveKeys(response)
                             startScreen<MainScreen>(true)
                         }

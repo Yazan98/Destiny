@@ -1,6 +1,7 @@
 package com.yazan98.culttrip.client.fragment.reg
 
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.yazan98.culttrip.client.R
@@ -16,7 +17,6 @@ import io.vortex.android.utils.ui.goneView
 import io.vortex.android.utils.ui.showView
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -41,7 +41,7 @@ class LoginFragment @Inject constructor() : VortexFragment<AuthState, AuthAction
 
         LoginButton?.apply {
             this.setOnClickListener {
-                GlobalScope.launch {
+                viewLifecycleOwner.lifecycleScope.launch {
                     when {
                         EmailField?.text.toString().trim().isEmpty() -> showMessage(getString(R.string.email_required))
                         PasswordField?.text.toString().trim().isEmpty() -> showMessage(getString(R.string.pass_required))
@@ -121,7 +121,7 @@ class LoginFragment @Inject constructor() : VortexFragment<AuthState, AuthAction
                     .setTitle(getString(R.string.register_completed))
                     .setMessage("Hi Mr, ${response.user.username} Your Account Created Successfully , Welcome To Culttrip Client")
                     .setPositiveButton("Ok") { dialog, which ->
-                        GlobalScope.launch {
+                        viewLifecycleOwner.lifecycleScope.launch {
                             saveKeys(response)
                             startScreen<MainScreen>(true)
                         }

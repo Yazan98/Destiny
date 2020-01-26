@@ -2,6 +2,7 @@ package com.yazan98.culttrip.data.repository
 
 import com.yazan98.culttrip.data.DestinyRepository
 import com.yazan98.culttrip.data.api.RecipeApi
+import com.yazan98.culttrip.data.models.request.CommentBody
 import com.yazan98.culttrip.data.models.response.DestinyResponse
 import com.yazan98.culttrip.data.models.response.Recipe
 import com.yazan98.culttrip.data.models.response.RecipeComment
@@ -24,6 +25,10 @@ class RecipeRepository @Inject constructor() : DestinyRepository<RecipeApi>() {
 
     suspend fun getCommentsByRecipeId(id: Long): Flowable<DestinyResponse<List<RecipeComment>>> {
         return getService().getAllCommentsByRecipeId(id)
+    }
+
+    suspend fun submitComment(body: CommentBody): Flowable<DestinyResponse<RecipeComment>> {
+        return getService().submitComment(body)
     }
 
 }

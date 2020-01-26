@@ -1,5 +1,6 @@
 package com.yazan98.culttrip.domain.logic
 
+import androidx.lifecycle.viewModelScope
 import com.yazan98.culttrip.data.di.RepositoriesComponentImpl
 import com.yazan98.culttrip.data.models.request.RegisterBody
 import com.yazan98.culttrip.data.repository.AuthRepository
@@ -37,14 +38,14 @@ class AuthViewModel @Inject constructor() : VortexViewModel<AuthState, AuthActio
             acceptLoadingState(true)
             addRxRequest(authRepository.registerAccount(body).subscribe({
                 it?.let {
-                    GlobalScope.launch {
+                    viewModelScope.launch(Dispatchers.IO) {
                         handleStateWithLoading(AuthState.AuthSuccessResponse(it.data))
                     }
                 }
             }, {
                 it?.let {
                     it.message?.let {
-                        GlobalScope.launch {
+                        viewModelScope.launch(Dispatchers.IO) {
                             acceptNewState(AuthState.ErrorResponse(it))
                             acceptLoadingState(false)
                         }

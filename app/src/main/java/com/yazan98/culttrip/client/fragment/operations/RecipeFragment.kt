@@ -17,7 +17,6 @@ import io.vortex.android.utils.ui.goneView
 import io.vortex.android.utils.ui.showView
 import kotlinx.android.synthetic.main.fragment_recipe.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

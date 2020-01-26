@@ -21,7 +21,6 @@ import io.vortex.android.utils.ui.linearVerticalLayout
 import io.vortex.android.utils.ui.showView
 import kotlinx.android.synthetic.main.fragment_discover.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

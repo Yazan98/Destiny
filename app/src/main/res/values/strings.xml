@@ -33,4 +33,6 @@
     <string name="add_item">Add Item To Cart</string>
     <string name="comments">View Comments</string>
     <string name="recipe_success">Item Saved in Cart</string>
+    <string name="send">Send</string>
+    <string name="enter_comment">Enter Comment</string>
 </resources>
