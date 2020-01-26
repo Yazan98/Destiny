@@ -1,6 +1,7 @@
 package com.yazan98.culttrip.domain.logic
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.yazan98.culttrip.data.di.RepositoriesComponentImpl
 import com.yazan98.culttrip.data.repository.RecipeRepository
 import com.yazan98.culttrip.domain.action.CommentAction
@@ -31,14 +32,14 @@ class RecipeCommentsViewModel @Inject constructor(): VortexViewModel<CommentStat
         withContext(Dispatchers.IO) {
             acceptLoadingState(true)
             addRxRequest(repository.getCommentsByRecipeId(id).subscribe({
-                GlobalScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     it.data?.let {
                         acceptLoadingState(false)
                         acceptNewState(CommentState.SuccessState(it))
                     }
                 }
             }, {
-                GlobalScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     it.message?.let {
                         acceptLoadingState(false)
                         acceptNewState(CommentState.ErrorState(it))

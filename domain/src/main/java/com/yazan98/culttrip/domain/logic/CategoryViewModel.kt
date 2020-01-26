@@ -1,5 +1,6 @@
 package com.yazan98.culttrip.domain.logic
 
+import androidx.lifecycle.viewModelScope
 import com.yazan98.culttrip.data.di.RepositoriesComponentImpl
 import com.yazan98.culttrip.data.repository.CategoryRepository
 import com.yazan98.culttrip.domain.action.CategoryAction
@@ -31,18 +32,19 @@ class CategoryViewModel @Inject constructor() : VortexViewModel<CategoryState, C
         withContext(Dispatchers.IO) {
             acceptLoadingState(true)
             addRxRequest(discoveryRepository.getAllRecipesByCategoryId(id).subscribe({
-                GlobalScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     it.data.let {
                         acceptNewState(
                             CategoryState.SuccessState(
                                 it.filter { s -> s.popular },
-                                it.filter { s -> !s.popular })
+                                it.filter { s -> !s.popular }
+                            )
                         )
                         acceptLoadingState(false)
                     }
                 }
             }, {
-                GlobalScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     it.message?.let {
                         acceptLoadingState(false)
                         acceptNewState(CategoryState.ErrorState(it))
@@ -55,4 +57,5 @@ class CategoryViewModel @Inject constructor() : VortexViewModel<CategoryState, C
     override suspend fun getInitialState(): CategoryState {
         return CategoryState.EmptyState()
     }
+
 }

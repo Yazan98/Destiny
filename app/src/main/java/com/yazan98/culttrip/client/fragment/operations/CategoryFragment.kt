@@ -3,6 +3,7 @@ package com.yazan98.culttrip.client.fragment.operations
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.yazan98.culttrip.client.R
 import com.yazan98.culttrip.client.adapter.PopularRecipesAdapter
@@ -41,7 +42,7 @@ class CategoryFragment @Inject constructor() :
     }
 
     override fun initScreen(view: View) {
-        GlobalScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             VortexPrefs.get("CategoryId", 1)?.let {
                 getController().execute(CategoryAction.GetRecipesByCategoryId((it as Int).toLong()))
             }

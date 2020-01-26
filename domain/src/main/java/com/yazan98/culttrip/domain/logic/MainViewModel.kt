@@ -1,6 +1,7 @@
 package com.yazan98.culttrip.domain.logic
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.yazan98.culttrip.data.di.RepositoriesComponentImpl
 import com.yazan98.culttrip.data.models.response.Category
 import com.yazan98.culttrip.data.models.response.Recipe
@@ -39,11 +40,11 @@ class MainViewModel @Inject constructor() : VortexViewModel<MainState, MainActio
     private suspend fun getAllCategories() {
         withContext(Dispatchers.IO) {
             addRxRequest(repository.getCategories().subscribe({
-                GlobalScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     categories.postValue(it.data)
                 }
             }, {
-                GlobalScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     it.message?.let {
                         acceptLoadingState(false)
                         acceptNewState(MainState.ErrorState(it))
@@ -57,14 +58,14 @@ class MainViewModel @Inject constructor() : VortexViewModel<MainState, MainActio
         withContext(Dispatchers.IO) {
             acceptLoadingState(true)
             addRxRequest(repository.getOffers().subscribe({
-                GlobalScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     it.data?.let {
                         acceptLoadingState(false)
                         acceptNewState(MainState.SuccessState(it))
                     }
                 }
             }, {
-                GlobalScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     it.message?.let {
                         acceptLoadingState(false)
                         acceptNewState(MainState.ErrorState(it))
@@ -77,13 +78,13 @@ class MainViewModel @Inject constructor() : VortexViewModel<MainState, MainActio
     private suspend fun getRecipes() {
         withContext(Dispatchers.IO) {
             addRxRequest(repository.getRecipes().subscribe({
-                GlobalScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     it.data?.let {
                         recipes.postValue(it)
                     }
                 }
             }, {
-                GlobalScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     it.message?.let {
                         acceptLoadingState(false)
                         acceptNewState(MainState.ErrorState(it))

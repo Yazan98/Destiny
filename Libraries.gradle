@@ -85,10 +85,10 @@ ext {
     ]
 
     LifeCycleConfiguration = [
-            LifecycleViewModel  : "androidx.lifecycle:lifecycle-viewmodel-ktx:$LifeCycleV",
+            LifecycleViewModel  : "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0-beta01",
             LifecycleExtensions : "androidx.lifecycle:lifecycle-extensions:$LifeCycleV",
-            LifecycleRuntime    : "androidx.lifecycle:lifecycle-runtime:$LifeCycleV",
-            LifecycleLiveData   : "androidx.lifecycle:lifecycle-livedata:$LifeCycleV",
+            LifecycleRuntime    : "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-alpha01",
+            LifecycleLiveData   : "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha01",
             LifecycleCommon     : "androidx.lifecycle:lifecycle-common:$LifeCycleV"
     ]
 

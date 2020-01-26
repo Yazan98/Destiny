@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.yazan98.culttrip.client.R
 import com.yazan98.culttrip.data.models.response.Recipe
 import com.yazan98.culttrip.domain.action.RecipeAction
@@ -40,7 +41,7 @@ class RecipeFragment @Inject constructor() : VortexFragment<RecipeState, RecipeA
     }
 
     override fun initScreen(view: View) {
-        GlobalScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             arguments?.let {
                 it.getLong("RecipeId", 1)?.also {
                     getController().execute(RecipeAction.GetRecipeById(it))
@@ -62,7 +63,7 @@ class RecipeFragment @Inject constructor() : VortexFragment<RecipeState, RecipeA
 
         AddPrice?.apply {
             this.setOnClickListener {
-                GlobalScope.launch {
+                viewLifecycleOwner.lifecycleScope.launch {
                     getController().execute(RecipeAction.AddPrice())
                 }
             }
@@ -70,7 +71,7 @@ class RecipeFragment @Inject constructor() : VortexFragment<RecipeState, RecipeA
 
         button?.apply {
             this.setOnClickListener {
-                GlobalScope.launch {
+                viewLifecycleOwner.lifecycleScope.launch {
                     getController().execute(RecipeAction.AddToDatabase())
                     executeAddRecipe()
                 }
@@ -81,11 +82,13 @@ class RecipeFragment @Inject constructor() : VortexFragment<RecipeState, RecipeA
             this.setOnClickListener {
                 viewModel.getStateHandler().value?.let {
                     (it as RecipeState.SuccessState).get().let { recipe ->
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            commentsFragment.getAllComments(recipe.id)
+                        }
                         activity?.let {
-                            GlobalScope.launch {
-                                commentsFragment.getAllComments(recipe.id)
+                            it.supportFragmentManager?.let {
+                                commentsFragment.show(it, "")
                             }
-                            commentsFragment.show(it.supportFragmentManager, "")
                         }
                     }
                 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.yazan98.culttrip.client.R
 import com.yazan98.culttrip.client.adapter.CategoryAdapter
 import com.yazan98.culttrip.client.adapter.OffersAdapter
@@ -48,18 +49,18 @@ class MainFragment @Inject constructor() : VortexFragment<MainState, MainAction,
     }
 
     override fun initScreen(view: View) {
-        GlobalScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             getController().execute(MainAction.GetMainPageDetails())
         }
 
         viewModel.categories.observe(this, Observer {
-            GlobalScope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 showAllCategories(it)
             }
         })
 
         viewModel.recipes.observe(this, Observer {
-            GlobalScope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 showRecipesList(it)
             }
         })

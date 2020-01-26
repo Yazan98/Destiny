@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.yazan98.culttrip.client.R
 import com.yazan98.culttrip.client.adapter.RecipeCommentAdapter
@@ -20,17 +21,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.android.viewmodel.ext.android.viewModel
 import javax.inject.Inject
 
 class RecipeCommentsFragment @Inject constructor() : BottomSheetDialogFragment() {
 
-    private lateinit var viewModel: RecipeCommentsViewModel
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        activity?.run {
-            viewModel = ViewModelProvider(this).get(RecipeCommentsViewModel::class.java)
-        }
-    }
+    private val viewModel: RecipeCommentsViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_recipe_comments, container, false)
@@ -39,16 +35,12 @@ class RecipeCommentsFragment @Inject constructor() : BottomSheetDialogFragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getStateHandler().observe(viewLifecycleOwner, Observer {
-            GlobalScope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 when (it) {
                     is CommentState.SuccessState -> showAllComments(it.get())
                     is CommentState.ErrorState -> {}
                 }
             }
-        })
-
-        viewModel.getLoadingStateHandler().observe(viewLifecycleOwner, Observer {
-
         })
     }
 
@@ -71,8 +63,9 @@ class RecipeCommentsFragment @Inject constructor() : BottomSheetDialogFragment()
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         CommentsRecycler?.adapter = null
+        viewModel.getRxRepository().clearRepository()
+        super.onDestroyView()
     }
 
 }

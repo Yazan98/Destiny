@@ -1,6 +1,7 @@
 package com.yazan98.culttrip.domain.logic
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.yazan98.culttrip.data.database.RecipeDto
 import com.yazan98.culttrip.data.database.entity.RecipeEntity
 import com.yazan98.culttrip.data.di.RepositoriesComponentImpl
@@ -53,7 +54,7 @@ class RecipeViewModel @Inject constructor() : VortexViewModel<RecipeState, Recip
         withContext(Dispatchers.IO) {
             acceptLoadingState(true)
             addRxRequest(repository.getRecipeById(id).subscribe({
-                GlobalScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     it.data?.let {
                         acceptLoadingState(false)
                         editedPrice.postValue(it.price)
@@ -62,7 +63,7 @@ class RecipeViewModel @Inject constructor() : VortexViewModel<RecipeState, Recip
                     }
                 }
             }, {
-                GlobalScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     it.message?.let {
                         acceptLoadingState(false)
                         acceptNewState(RecipeState.ErrorState(it))

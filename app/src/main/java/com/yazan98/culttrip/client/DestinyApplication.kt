@@ -5,6 +5,7 @@ import com.intuit.sdp.BuildConfig
 import com.yazan98.culttrip.client.utils.LeakUploader
 import com.yazan98.culttrip.domain.ApplicationConsts
 import com.yazan98.culttrip.domain.logic.AuthViewModel
+import com.yazan98.culttrip.domain.logic.RecipeCommentsViewModel
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.vortex.android.keys.ImageLoader
@@ -75,6 +76,7 @@ class DestinyApplication : VortexApplication() {
 
     private val appModules: Module = module {
         viewModel<AuthViewModel> { AuthViewModel() }
+        viewModel<RecipeCommentsViewModel> { RecipeCommentsViewModel() }
     }
 
     private suspend fun configNotifications() {
