@@ -54,7 +54,11 @@ class CartFragment @Inject constructor() : VortexFragment<CartState, CartAction,
 
         CheckoutButton?.apply {
             this.setOnClickListener {
-
+                lifecycleScope.launch {
+                    activity?.let {
+                        messageController.showSnackbarWithColor(it, getString(R.string.not_allowed), R.color.colorPrimary)
+                    }
+                }
             }
         }
     }

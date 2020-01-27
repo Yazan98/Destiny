@@ -3,6 +3,8 @@ package com.yazan98.culttrip.client.fragment.reg
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
 import com.yazan98.culttrip.client.R
 import com.yazan98.culttrip.client.screen.MainScreen
 import com.yazan98.culttrip.data.models.request.RegisterBody
@@ -94,6 +96,7 @@ class RegisterFragment @Inject constructor() :
                     .setPositiveButton("Ok") { dialog, which ->
                         viewLifecycleOwner.lifecycleScope.launch {
                             saveKeys(response)
+                            FirebaseMessaging.getInstance().subscribeToTopic("app_offers")
                             startScreen<MainScreen>(true)
                         }
                         dialog.dismiss()

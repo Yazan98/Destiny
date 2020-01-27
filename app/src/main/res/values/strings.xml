@@ -40,4 +40,6 @@
     <string name="cart_empty">Empty Cart, Please Add Some Items</string>
     <string name="my_cart">My Cart</string>
     <string name="checkout">checkout</string>
+    <string name="not_allowed">Vortex Testing (Demo Application)</string>
+    <string name="channel_notifications">Offers</string>
 </resources>

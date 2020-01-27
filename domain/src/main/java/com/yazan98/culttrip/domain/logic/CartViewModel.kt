@@ -16,7 +16,7 @@ import kotlin.coroutines.suspendCoroutine
 class CartViewModel @Inject constructor() : VortexViewModel<CartState, CartAction>() {
 
     override suspend fun execute(newAction: CartAction) {
-        if (getStateHandler().value == null || getStateHandler().value is CartState.ErrorResponse) {
+        withContext(Dispatchers.IO) {
             getAllItems()
         }
     }
@@ -46,4 +46,5 @@ class CartViewModel @Inject constructor() : VortexViewModel<CartState, CartActio
     override suspend fun getInitialState(): CartState {
         return CartState.EmptyState()
     }
+
 }
