@@ -1,35 +1,42 @@
-# Culltrip-Client
-Android Application For Culture Activity With Vortex-io
+![New Project (7)](https://user-images.githubusercontent.com/29167110/73178745-d0188380-4109-11ea-949e-ac8805551551.png)
 
-# Application Components
+# Destiny Android Application
 
-1. Mvvm Architecture
-2. Vortex Implementation
-3. Realm Database
-4. Clean Architecture
-5. Gradle Dependencies Management
-6. Retrofit For Api's
-7. Dependency Injection (Motif, Koin)
-8. Material Design
+#### Android Application With Vortex-io
 
-# Application Status
+![](https://img.shields.io/badge/Project%20Status-Beta%20Version-brightgreen)
+![](https://img.shields.io/badge/Version-1.0.0-green)
+![](https://img.shields.io/badge/License-Apache%202.0-blue)
+![](https://img.shields.io/badge/Language-Kotlin-orange)
 
-Under Development
+##### Project Overview
+This Application is Just For Test Vortex Android Version With Mvvm, Clean Archeticture, Redux State Handler and Navigation Component with Backend Side [Api Link](https://github.com/Yazan98/Destiny-Api) and at this stage Vortex is Stable and Ready To Use
 
-# Base Code Link
+##### Application Components
 
-[Link](https://github.com/Vortex-io/Vortex)
+1. Retrofit
+2. RxJava
+3. Vortex-io
+4. Realm Database
+5. Work Manager For Background Tasks
+6. Mvvm Architecture
+7. Clean Architecture, Multi Moular Application
+8. Redux State Handler
+9. Firebase Messaging Service
+10. Recycler View With Images Via Fresco
+11. Dependency Injection (Koin, Motif)
+12. Multi Threading With Kotlin Coroutines
 
-# Api
+#### Application Screenshots
 
-This Application Built With SpringBoot and Kotlin
+![New Project](https://user-images.githubusercontent.com/29167110/73180974-44552600-410e-11ea-86f2-5f0651eb8d19.jpg)
 
-[Culttrip Api](https://github.com/Yazan98/Culttrip)
 
-# Screenshots
+![New Project (1)](https://user-images.githubusercontent.com/29167110/73181009-53d46f00-410e-11ea-9ace-ebd13f6acfb0.jpg)
 
-![83708459_1059363244396918_6450788471953948672_n](https://user-images.githubusercontent.com/29167110/73003690-f682aa00-3dfd-11ea-93fe-4c746cfffe7d.jpg)
+# Developers
+(Yazan Tarifi) - Author -> yazantarifi1@hotmail.com
 
-![83502622_462718104397826_8488970274627125248_n](https://user-images.githubusercontent.com/29167110/73003733-04d0c600-3dfe-11ea-8844-a39b664feae2.jpg)
+# License
+Copyright (C) 2019 Destiny Android Application is An Open Source Library (Licensed under the Apache License, Version 2.0)
 
-![82865465_491490068415574_1218682311516618752_n](https://user-images.githubusercontent.com/29167110/73003763-1023f180-3dfe-11ea-9645-930ff131bf6d.jpg)
