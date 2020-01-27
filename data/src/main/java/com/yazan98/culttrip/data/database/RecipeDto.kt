@@ -47,10 +47,16 @@ class RecipeDto(private val database: Realm) : DatabaseCrudOperations<RecipeEnti
         }
     }
 
-    override suspend fun getAll(): LiveData<RealmResults<RecipeEntity>> {
+    override suspend fun getAll(): RealmResults<RecipeEntity> {
         return withContext(Dispatchers.IO) {
             database.where(RecipeEntity::class.java)
-                .findAllAsync().asLiveData()
+                .findAll()
+        }
+    }
+
+    override suspend fun isEmpty(): Boolean {
+        return withContext(Dispatchers.IO) {
+            database.isEmpty
         }
     }
 

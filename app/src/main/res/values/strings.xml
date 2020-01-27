@@ -35,4 +35,9 @@
     <string name="recipe_success">Item Saved in Cart</string>
     <string name="send">Send</string>
     <string name="enter_comment">Enter Comment</string>
+    <string name="def" />
+    <string name="cart">Cart</string>
+    <string name="cart_empty">Empty Cart, Please Add Some Items</string>
+    <string name="my_cart">My Cart</string>
+    <string name="checkout">checkout</string>
 </resources>

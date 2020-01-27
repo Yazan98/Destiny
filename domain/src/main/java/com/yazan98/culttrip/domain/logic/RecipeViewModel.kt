@@ -90,6 +90,10 @@ class RecipeViewModel @Inject constructor() : VortexViewModel<RecipeState, Recip
         }
     }
 
+    fun destroyDatabase() {
+        Realm.getDefaultInstance().close()
+    }
+
     override suspend fun getInitialState(): RecipeState {
         return RecipeState.EmptyState()
     }

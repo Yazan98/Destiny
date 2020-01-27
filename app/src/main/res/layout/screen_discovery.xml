@@ -11,6 +11,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
+            android:id="@+id/OperationsToolbar"
             android:layout_height="wrap_content">
 
             <TextView

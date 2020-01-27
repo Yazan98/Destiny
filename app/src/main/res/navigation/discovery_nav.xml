@@ -13,10 +13,17 @@
         <action
             android:id="@+id/action_discoverFragment_to_recipeFragment"
             app:destination="@id/recipeFragment" />
+        <action
+            android:id="@+id/action_discoverFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeFragment"
         tools:layout="@layout/fragment_recipe"
         android:name="com.yazan98.culttrip.client.fragment.operations.RecipeFragment"
         android:label="RecipeFragment" />
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.yazan98.culttrip.client.fragment.operations.CartFragment"
+        android:label="CartFragment" />
 </navigation>

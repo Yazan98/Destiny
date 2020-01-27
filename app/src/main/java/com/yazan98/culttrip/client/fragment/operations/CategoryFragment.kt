@@ -2,9 +2,11 @@ package com.yazan98.culttrip.client.fragment.operations
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.yazan98.culttrip.client.R
 import com.yazan98.culttrip.client.adapter.PopularRecipesAdapter
 import com.yazan98.culttrip.client.adapter.RecipesAdapter
@@ -25,8 +27,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class CategoryFragment @Inject constructor() :
-    VortexFragment<CategoryState, CategoryAction, CategoryViewModel>() {
+class CategoryFragment @Inject constructor() : VortexFragment<CategoryState, CategoryAction, CategoryViewModel>() {
 
     private lateinit var viewModel: CategoryViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,16 +46,27 @@ class CategoryFragment @Inject constructor() :
             VortexPrefs.get("CategoryId", 1)?.let {
                 getController().execute(CategoryAction.GetRecipesByCategoryId((it as Int).toLong()))
             }
-
-            VortexPrefs.get("CategoryName", "Steak")?.let {
-                showToolbarName(it as String)
-            }
         }
-    }
 
-    private suspend fun showToolbarName(name: String) {
-        withContext(Dispatchers.Main) {
-            CategoryToolbar?.title = name
+        viewModel.databaseObserver.observe(viewLifecycleOwner, Observer {
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                when (it) {
+                    false -> {
+                        findNavController().navigate(R.id.action_discoverFragment_to_cartFragment)
+                        viewModel.databaseObserver.postValue(true)
+                    }
+
+                    true -> showMessage(getString(R.string.cart_empty))
+                }
+            }
+        })
+
+        CartButton?.apply {
+            this.setOnClickListener {
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                    getController().execute(CategoryAction.CartCheckAction())
+                }
+            }
         }
     }
 

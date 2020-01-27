@@ -172,6 +172,7 @@ class RecipeFragment @Inject constructor() : VortexFragment<RecipeState, RecipeA
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.getRxRepository().clearRepository()
+        viewModel.destroyDatabase()
     }
 
 }

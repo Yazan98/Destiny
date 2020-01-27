@@ -8,7 +8,6 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:id="@+id/DiscoveryContent"
         android:layout_height="match_parent">
 
@@ -76,6 +75,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:id="@+id/CartButton"
+        android:text="@string/cart"
+        android:gravity="center"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_height="wrap_content"/>
 
     <ProgressBar
         android:layout_width="wrap_content"

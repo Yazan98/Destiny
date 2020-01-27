@@ -15,6 +15,8 @@ interface DatabaseCrudOperations<T: RealmObject> {
 
     suspend fun clearDatabase()
 
-    suspend fun getAll(): LiveData<RealmResults<T>>
+    suspend fun getAll(): RealmResults<T>
+
+    suspend fun isEmpty(): Boolean
 
 }
