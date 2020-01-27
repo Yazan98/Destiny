@@ -41,7 +41,7 @@ class RegisterFragment @Inject constructor() :
 
     override fun initScreen(view: View) {
         RegisterIcon?.apply {
-            this.setActualImageResource(R.drawable.screen_icon)
+            this.setActualImageResource(R.drawable.logo)
         }
 
         RegisterButtonMain?.apply {

@@ -15,7 +15,7 @@ class OnBoardingFragment @Inject constructor() : VortexBaseFragment() {
 
     override fun initScreen(view: View) {
         BoardingIcon?.apply {
-            this.setImageURI("res:/${R.drawable.screen_icon}")
+            this.setImageURI("res:/${R.drawable.logo}")
         }
 
         ContinueButton?.apply {

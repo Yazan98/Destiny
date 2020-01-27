@@ -42,4 +42,5 @@
     <string name="checkout">checkout</string>
     <string name="not_allowed">Vortex Testing (Demo Application)</string>
     <string name="channel_notifications">Offers</string>
+    <string name="login_with_your_existing_account">Login With Your Existing Account</string>
 </resources>

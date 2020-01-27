@@ -36,7 +36,7 @@ class LoginFragment @Inject constructor() : VortexFragment<AuthState, AuthAction
 
     override fun initScreen(view: View) {
         LoginIcon?.apply {
-            this.setActualImageResource(R.drawable.screen_icon)
+            this.setActualImageResource(R.drawable.logo)
         }
 
         LoginButton?.apply {
