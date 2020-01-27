@@ -159,6 +159,12 @@ dependencies { configuration ->
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+    def work_version = "2.3.0"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    implementation "androidx.work:work-rxjava2:$work_version"
+    implementation "androidx.work:work-gcm:$work_version"
+    androidTestImplementation "androidx.work:work-testing:$work_version"
+
 }
 
 private void koinConfiguration(configuration) {

@@ -14,6 +14,7 @@ import com.yazan98.culttrip.client.screen.OperationsScreen
 import com.yazan98.culttrip.data.models.response.Category
 import com.yazan98.culttrip.data.models.response.Offer
 import com.yazan98.culttrip.data.models.response.Recipe
+import com.yazan98.culttrip.data.workers.WorkerStarter
 import com.yazan98.culttrip.domain.action.MainAction
 import com.yazan98.culttrip.domain.logic.MainViewModel
 import com.yazan98.culttrip.domain.state.MainState
@@ -58,6 +59,12 @@ class MainFragment @Inject constructor() : VortexFragment<MainState, MainAction,
                 showAllCategories(it)
             }
         })
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            activity?.let {
+                WorkerStarter.startOffers(it)
+            }
+        }
 
         viewModel.recipes.observe(this, Observer {
             viewLifecycleOwner.lifecycleScope.launch {
